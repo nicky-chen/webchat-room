@@ -38,15 +38,15 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
                 <div class="am-tab-panel am-fade am-in" id="tab2">
                     <hr>
                     <blockquote>
-                        <p><a href="https://github.com/Amayadream/WebChat" target="_blank">https://github.com/Amayadream/WebChat</a></p>
+                        <p><a href="https://github.com/nicky-chen" target="_blank">https://github.com/nicky-chen</a></p>
                     </blockquote>
                 </div>
 
                 <div class="am-tab-panel am-fade am-in" id="tab3">
                     <hr>
                     <blockquote>
-                        <p>欢迎访问我的个人网站<a href="http://www.amayadream.com" target="_blank">Amayadream.com</a>,虽然并没有什么东西可看</p>
-                        <p>也欢迎访问我的github, <a href="https://github.com/Amayadream" target="_blank">github.com/Amayadream</a></p>
+                        <p>欢迎访问我的个人网站<a href="https://www.nicky-chin.cn" target="_blank">nicky-chin.cn</a>,虽然并没有什么东西可看</p>
+                        <p>也欢迎访问我的github, <a href="https://github.com/nicky-chen" target="_blank">nicky-chin</a></p>
                     </blockquote>
                 </div>
             </div>
