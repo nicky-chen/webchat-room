@@ -42,10 +42,10 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
         <!-- 列表区 -->
         <div class="am-panel am-panel-default" style="float:right;width: 20%;">
             <div class="am-panel-hd">
-                <h3 class="am-panel-title">在线列表 [<span id="onlinenum"></span>]</h3>
+                <h3 class="am-panel-title">在线 [<span id="onlinenum"></span>]</h3>
             </div>
             <ul class="am-list am-list-static am-list-striped" >
-                <li>图灵机器人 <button class="am-btn am-btn-xs am-btn-danger" id="tuling" data-am-button>未上线</button></li>
+                <li>聊天助手 <button class="am-btn am-btn-xs am-btn-danger" id="tuling" data-am-button>未上线</button></li>
             </ul>
             <ul class="am-list am-list-static am-list-striped" id="list">
             </ul>
