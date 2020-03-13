@@ -102,7 +102,7 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
                 <div class="am-tab-panel am-fade" id="tab2">
                     <form class="am-form am-form-horizontal" style="text-align: center;">
                         <div style="text-align: center;margin-bottom: 10px">
-                            <img class="am-circle" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="140" height="140" alt="Amayadream"/>
+                            <img class="am-circle" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="140" height="140" alt="nicky-chin"/>
                         </div>
                         <div class="am-form-group am-form-file">
                             <button type="button" class="am-btn am-btn-secondary am-btn-sm">
