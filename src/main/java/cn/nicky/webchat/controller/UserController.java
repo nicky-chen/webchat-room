@@ -27,6 +27,11 @@ import cn.nicky.webchat.utils.LogUtil;
 import cn.nicky.webchat.utils.NetUtil;
 import cn.nicky.webchat.utils.UploadUtil;
 
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_DETAIL_UPDATE_PASSWORD;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_DETAIL_UPDATE_PROFILE;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_DETAIL_UPDATE_PROFILEHEAD;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_TYPE_UPDATE;
+
 /**
  * @author nicky_chin
  * @description:
@@ -95,9 +100,8 @@ public class UserController {
         HttpServletRequest request) {
         boolean flag = userService.update(user);
         if (flag) {
-            logService.insert(logUtil
-                .setLog(userid, date.getTime24(), defined.LOG_TYPE_UPDATE, defined.LOG_DETAIL_UPDATE_PROFILE,
-                    netUtil.getIpAddress(request)));
+            logService.insert(logUtil.setLog(userid, date.getTime24(), LOG_TYPE_UPDATE, LOG_DETAIL_UPDATE_PROFILE,
+                netUtil.getIpAddress(request)));
             attributes.addFlashAttribute("message", "[" + userid + "]资料更新成功!");
         } else {
             attributes.addFlashAttribute("error", "[" + userid + "]资料更新失败!");
@@ -123,9 +127,8 @@ public class UserController {
             user.setPassword(newpass);
             boolean flag = userService.update(user);
             if (flag) {
-                logService.insert(logUtil
-                    .setLog(userid, date.getTime24(), defined.LOG_TYPE_UPDATE, defined.LOG_DETAIL_UPDATE_PASSWORD,
-                        netUtil.getIpAddress(request)));
+                logService.insert(logUtil.setLog(userid, date.getTime24(), LOG_TYPE_UPDATE, LOG_DETAIL_UPDATE_PASSWORD,
+                    netUtil.getIpAddress(request)));
                 attributes.addFlashAttribute("message", "[" + userid + "]密码更新成功!");
             } else {
                 attributes.addFlashAttribute("error", "[" + userid + "]密码更新失败!");
@@ -156,7 +159,7 @@ public class UserController {
             boolean flag = userService.update(user);
             if (flag) {
                 logService.insert(logUtil
-                    .setLog(userid, date.getTime24(), defined.LOG_TYPE_UPDATE, defined.LOG_DETAIL_UPDATE_PROFILEHEAD,
+                    .setLog(userid, date.getTime24(), LOG_TYPE_UPDATE, LOG_DETAIL_UPDATE_PROFILEHEAD,
                         netUtil.getIpAddress(request)));
                 attributes.addFlashAttribute("message", "[" + userid + "]头像更新成功!");
             } else {
