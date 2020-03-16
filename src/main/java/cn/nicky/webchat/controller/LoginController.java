@@ -44,33 +44,32 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String userid, String password, HttpSession session, RedirectAttributes attributes,
+    public String login(String userId, String password, HttpSession session, RedirectAttributes attributes,
         WordDefined defined, CommonDate date, LogUtil logUtil, NetUtil netUtil, HttpServletRequest request) {
-        User user = userService.selectUserByUserid(userid);
+        User user = userService.selectUserByUserid(userId);
         if (user == null) {
             attributes.addFlashAttribute("error", defined.LOGIN_USERID_ERROR);
             return "redirect:/user/login";
-        } else {
-            if (!user.getPassword().equals(password)) {
-                attributes.addFlashAttribute("error", defined.LOGIN_PASSWORD_ERROR);
-                return "redirect:/user/login";
-            } else {
-                if (user.getStatus() != 1) {
-                    attributes.addFlashAttribute("error", defined.LOGIN_USERID_DISABLED);
-                    return "redirect:/user/login";
-                } else {
-                    logService.insert(logUtil
-                        .setLog(userid, date.getTime24(), defined.LOG_TYPE_LOGIN, defined.LOG_DETAIL_USER_LOGIN,
-                            netUtil.getIpAddress(request)));
-                    session.setAttribute("userid", userid);
-                    session.setAttribute("login_status", true);
-                    user.setLasttime(date.getTime24());
-                    userService.update(user);
-                    attributes.addFlashAttribute("message", defined.LOGIN_SUCCESS);
-                    return "redirect:/chat";
-                }
-            }
         }
+
+        if (!user.getPassword().equals(password)) {
+            attributes.addFlashAttribute("error", defined.LOGIN_PASSWORD_ERROR);
+            return "redirect:/user/login";
+        }
+        if (user.getStatus() != 1) {
+            attributes.addFlashAttribute("error", defined.LOGIN_USERID_DISABLED);
+            return "redirect:/user/login";
+        }
+        logService.insert(logUtil
+            .setLog(userId, date.getTime24(), defined.LOG_TYPE_LOGIN, defined.LOG_DETAIL_USER_LOGIN,
+                netUtil.getIpAddress(request)));
+        session.setAttribute("userid", userId);
+        session.setAttribute("login_status", true);
+        user.setLasttime(date.getTime24());
+        userService.update(user);
+        attributes.addFlashAttribute("message", defined.LOGIN_SUCCESS);
+        return "redirect:/chat";
+
     }
 
     @RequestMapping(value = "/logout")

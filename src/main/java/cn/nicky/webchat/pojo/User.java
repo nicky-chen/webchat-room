@@ -2,12 +2,15 @@ package cn.nicky.webchat.pojo;
 
 import org.springframework.stereotype.Repository;
 
+import lombok.Data;
+
 /**
  * @author nicky_chin
  * @description:
  * @date: 2020/3/12 上午9:58
  * @since JDK 1.8
  */
+@Data
 @Repository(value = "user")
 public class User {
     private String userid;      //用户名
@@ -20,89 +23,4 @@ public class User {
     private String firsttime;   //注册时间
     private String lasttime;    //最后登录时间
     private int status;      //账号状态(1正常 0禁用)
-
-    /**
-     * getter&setter
-     *
-     * @return
-     */
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getFirsttime() {
-        return firsttime;
-    }
-
-    public void setFirsttime(String firsttime) {
-        this.firsttime = firsttime;
-    }
-
-    public String getLasttime() {
-        return lasttime;
-    }
-
-    public void setLasttime(String lasttime) {
-        this.lasttime = lasttime;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
-    public String getProfilehead() {
-        return profilehead;
-    }
-
-    public void setProfilehead(String profilehead) {
-        this.profilehead = profilehead;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 }

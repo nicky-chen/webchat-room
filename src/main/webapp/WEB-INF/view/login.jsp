@@ -25,14 +25,14 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
   <div class="avtar"><img src="<%=path%>/static/source/img/konan_1.png" /></div>
   <form id="login-form" action="<%=path%>/user/login" method="post" onsubmit="return checkLoginForm()">
     <div class="key">
-      <input type="text" id="username" name="userid" placeholder="请输入账号" >
+      <input type="text" id="username" name="userId" placeholder="请输入账号" >
     </div>
 
     <div class="key">
       <input type="password" id="password" name="password" placeholder="请输入密码">
     </div>
     <div class="signin">
-      <input type="submit" id="submit" value="Login" >
+      <input type="submit" id="submit" value="登录/注册" >
     </div>
   </form>
 </div>
