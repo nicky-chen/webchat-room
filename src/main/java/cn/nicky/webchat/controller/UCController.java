@@ -15,9 +15,17 @@ import cn.nicky.webchat.pojo.User;
 import cn.nicky.webchat.service.ILogService;
 import cn.nicky.webchat.service.IUserService;
 import cn.nicky.webchat.utils.CommonDate;
+import cn.nicky.webchat.utils.ErrorMessageConstant;
 import cn.nicky.webchat.utils.LogUtil;
 import cn.nicky.webchat.utils.NetUtil;
-import cn.nicky.webchat.utils.WordDefined;
+
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_PASSWORD_ERROR;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_SUCCESS;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_USERID_DISABLED;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_USERID_ERROR;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGOUT_SUCCESS;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_DETAIL_USER_LOGIN;
+import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_TYPE_LOGIN;
 
 /**
  * @author nicky_chin
@@ -27,7 +35,7 @@ import cn.nicky.webchat.utils.WordDefined;
  */
 @Controller
 @RequestMapping(value = "/user")
-public class LoginController {
+public class UCController {
 
     @Resource
     private IUserService userService;
@@ -45,38 +53,37 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(String userId, String password, HttpSession session, RedirectAttributes attributes,
-        WordDefined defined, CommonDate date, LogUtil logUtil, NetUtil netUtil, HttpServletRequest request) {
+        CommonDate date, LogUtil logUtil, NetUtil netUtil, HttpServletRequest request) {
         User user = userService.selectUserByUserid(userId);
         if (user == null) {
-            attributes.addFlashAttribute("error", defined.LOGIN_USERID_ERROR);
+            attributes.addFlashAttribute("error", LOGIN_USERID_ERROR);
             return "redirect:/user/login";
         }
 
         if (!user.getPassword().equals(password)) {
-            attributes.addFlashAttribute("error", defined.LOGIN_PASSWORD_ERROR);
+            attributes.addFlashAttribute("error", LOGIN_PASSWORD_ERROR);
             return "redirect:/user/login";
         }
         if (user.getStatus() != 1) {
-            attributes.addFlashAttribute("error", defined.LOGIN_USERID_DISABLED);
+            attributes.addFlashAttribute("error", LOGIN_USERID_DISABLED);
             return "redirect:/user/login";
         }
         logService.insert(logUtil
-            .setLog(userId, date.getTime24(), defined.LOG_TYPE_LOGIN, defined.LOG_DETAIL_USER_LOGIN,
-                netUtil.getIpAddress(request)));
+            .setLog(userId, date.getTime24(), LOG_TYPE_LOGIN, LOG_DETAIL_USER_LOGIN, netUtil.getIpAddress(request)));
         session.setAttribute("userid", userId);
         session.setAttribute("login_status", true);
         user.setLasttime(date.getTime24());
         userService.update(user);
-        attributes.addFlashAttribute("message", defined.LOGIN_SUCCESS);
+        attributes.addFlashAttribute("message", LOGIN_SUCCESS);
         return "redirect:/chat";
 
     }
 
     @RequestMapping(value = "/logout")
-    public String logout(HttpSession session, RedirectAttributes attributes, WordDefined defined) {
+    public String logout(HttpSession session, RedirectAttributes attributes, ErrorMessageConstant defined) {
         session.removeAttribute("userid");
         session.removeAttribute("login_status");
-        attributes.addFlashAttribute("message", defined.LOGOUT_SUCCESS);
+        attributes.addFlashAttribute("message", LOGOUT_SUCCESS);
         return "redirect:/user/login";
     }
 }

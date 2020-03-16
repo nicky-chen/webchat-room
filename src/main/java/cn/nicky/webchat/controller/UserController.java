@@ -22,10 +22,10 @@ import cn.nicky.webchat.pojo.User;
 import cn.nicky.webchat.service.ILogService;
 import cn.nicky.webchat.service.IUserService;
 import cn.nicky.webchat.utils.CommonDate;
+import cn.nicky.webchat.utils.ErrorMessageConstant;
 import cn.nicky.webchat.utils.LogUtil;
 import cn.nicky.webchat.utils.NetUtil;
 import cn.nicky.webchat.utils.UploadUtil;
-import cn.nicky.webchat.utils.WordDefined;
 
 /**
  * @author nicky_chin
@@ -91,7 +91,7 @@ public class UserController {
      */
     @RequestMapping(value = "{userid}/update", method = RequestMethod.POST)
     public String update(@PathVariable("userid") String userid, @ModelAttribute("userid") String sessionid, User user,
-        RedirectAttributes attributes, NetUtil netUtil, LogUtil logUtil, CommonDate date, WordDefined defined,
+        RedirectAttributes attributes, NetUtil netUtil, LogUtil logUtil, CommonDate date, ErrorMessageConstant defined,
         HttpServletRequest request) {
         boolean flag = userService.update(user);
         if (flag) {
@@ -116,7 +116,7 @@ public class UserController {
      */
     @RequestMapping(value = "{userid}/pass", method = RequestMethod.POST)
     public String changePassword(@PathVariable("userid") String userid, String oldpass, String newpass,
-        RedirectAttributes attributes, NetUtil netUtil, LogUtil logUtil, CommonDate date, WordDefined defined,
+        RedirectAttributes attributes, NetUtil netUtil, LogUtil logUtil, CommonDate date, ErrorMessageConstant defined,
         HttpServletRequest request) {
         user = userService.selectUserByUserid(userid);
         if (oldpass.equals(user.getPassword())) {
@@ -148,7 +148,7 @@ public class UserController {
     @RequestMapping(value = "{userid}/upload")
     public String upload(@PathVariable("userid") String userid, MultipartFile file, HttpServletRequest request,
         UploadUtil uploadUtil, RedirectAttributes attributes, NetUtil netUtil, LogUtil logUtil, CommonDate date,
-        WordDefined defined) {
+        ErrorMessageConstant defined) {
         try {
             String fileurl = uploadUtil.upload(request, "upload", userid);
             user = userService.selectUserByUserid(userid);
