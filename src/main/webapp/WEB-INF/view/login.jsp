@@ -91,7 +91,7 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
     //	return false;
     //}
     else{
-      $('#submit').attr('value','Logining~');
+      $('#submit').attr('value','登录中~');
       return true;
     }
   }

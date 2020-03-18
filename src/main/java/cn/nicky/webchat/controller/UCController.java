@@ -22,7 +22,6 @@ import cn.nicky.webchat.utils.NetUtil;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_PASSWORD_ERROR;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_SUCCESS;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_USERID_DISABLED;
-import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGIN_USERID_ERROR;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOGOUT_SUCCESS;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_DETAIL_USER_LOGIN;
 import static cn.nicky.webchat.utils.ErrorMessageConstant.LOG_TYPE_LOGIN;
@@ -53,11 +52,23 @@ public class UCController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(String userId, String password, HttpSession session, RedirectAttributes attributes,
-        CommonDate date, LogUtil logUtil, NetUtil netUtil, HttpServletRequest request) {
+        CommonDate date, LogUtil logUtil, HttpServletRequest request) {
         User user = userService.selectUserByUserid(userId);
         if (user == null) {
-            attributes.addFlashAttribute("error", LOGIN_USERID_ERROR);
-            return "redirect:/user/login";
+            user = new User();
+            user.setPassword(password);
+            user.setUserid(userId);
+            user.setSex(0);
+            user.setAge(18);
+            user.setProfilehead("");
+            user.setProfile("初来驾到");
+            user.setFirsttime(date.getTime24());
+            user.setLasttime(user.getFirsttime());
+            user.setNickname("user_" + String.valueOf(System.currentTimeMillis()).substring(5));
+            user.setStatus(1);
+            userService.insert(user);
+            loginSuccess(userId, session, attributes, date, logUtil, request, user);
+            return "redirect:/chat";
         }
 
         if (!user.getPassword().equals(password)) {
@@ -68,13 +79,7 @@ public class UCController {
             attributes.addFlashAttribute("error", LOGIN_USERID_DISABLED);
             return "redirect:/user/login";
         }
-        logService.insert(logUtil
-            .setLog(userId, date.getTime24(), LOG_TYPE_LOGIN, LOG_DETAIL_USER_LOGIN, netUtil.getIpAddress(request)));
-        session.setAttribute("userid", userId);
-        session.setAttribute("login_status", true);
-        user.setLasttime(date.getTime24());
-        userService.update(user);
-        attributes.addFlashAttribute("message", LOGIN_SUCCESS);
+        loginSuccess(userId, session, attributes, date, logUtil, request, user);
         return "redirect:/chat";
 
     }
@@ -85,5 +90,26 @@ public class UCController {
         session.removeAttribute("login_status");
         attributes.addFlashAttribute("message", LOGOUT_SUCCESS);
         return "redirect:/user/login";
+    }
+
+    /**
+     * 登录成功
+     * @param userId
+     * @param session
+     * @param attributes
+     * @param date
+     * @param logUtil
+     * @param request
+     * @param user
+     */
+    private void loginSuccess(String userId, HttpSession session, RedirectAttributes attributes, CommonDate date,
+        LogUtil logUtil, HttpServletRequest request, User user) {
+        logService.insert(logUtil
+            .setLog(userId, date.getTime24(), LOG_TYPE_LOGIN, LOG_DETAIL_USER_LOGIN, NetUtil.getIpAddress(request)));
+        session.setAttribute("userid", userId);
+        session.setAttribute("login_status", true);
+        user.setLasttime(date.getTime24());
+        userService.update(user);
+        attributes.addFlashAttribute("message", LOGIN_SUCCESS);
     }
 }
