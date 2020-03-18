@@ -97,12 +97,12 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
         var onlinenum = $("#onlinenum").text();
         if($(this).text() == "未上线"){
             $(this).text("已上线").removeClass("am-btn-danger").addClass("am-btn-success");
-            showNotice("图灵机器人加入聊天室");
+            showNotice("聊天机器人加入聊天室");
             $("#onlinenum").text(parseInt(onlinenum) + 1);
         }
         else{
             $(this).text("未上线").removeClass("am-btn-success").addClass("am-btn-danger");
-            showNotice("图灵机器人离开聊天室");
+            showNotice("聊天机器人离开聊天室");
             $("#onlinenum").text(parseInt(onlinenum) - 1)
         }
     });
@@ -185,7 +185,7 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
             layer.msg("请不要惜字如金!", { offset: 0, shift: 6 });
             return;
         }
-        $("#tuling").text() == "已上线"? tuling(message):console.log("图灵机器人未开启");  //检测是否加入图灵机器人
+        $("#tuling").text() == "已上线"? tuling(message):console.log("聊天机器人未开启");  //检测是否加入机器人
         ws.send(JSON.stringify({
             message : {
                 content : message,
@@ -233,11 +233,11 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
     /**
      * 展示会话信息
      */
-    function showChat(message){
-        var to = message.to == null || message.to == ""? "全体成员" : message.to;   //获取接收人
-        var isSef = '${userid}' == message.from ? "am-comment-flip" : "";   //如果是自己则显示在右边,他人信息显示在左边
-        var html = "<li class=\"am-comment "+isSef+" am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/"+message.from+"/head\"></a><div class=\"am-comment-main\">\n" +
-                "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">"+message.from+"</a> 发表于<time> "+message.time+"</time> 发送给: "+to+" </div></header><div class=\"am-comment-bd\"> <p>"+message.content+"</p></div></div></li>";
+    function showChat(message) {
+        var to = message.to == null || message.to === "" ? "全体成员" : message.to;   //获取接收人
+        var isSef = '${userid}' === message.from ? "am-comment-flip" : "";   //如果是自己则显示在右边,他人信息显示在左边
+        var html = "<li class=\"am-comment " + isSef + " am-comment-primary\"><a href=\"#link-to-user-home\"><img width=\"48\" height=\"48\" class=\"am-comment-avatar\" alt=\"\" src=\"${ctx}/" + message.from + "/head\"></a><div class=\"am-comment-main\">\n" +
+            "<header class=\"am-comment-hd\"><div class=\"am-comment-meta\">   <a class=\"am-comment-author\" href=\"#link-to-user\">" + message.from + "</a> 发表于<time> " + message.time + "</time> 发送给: " + to + " </div></header><div class=\"am-comment-bd\"> <p>" + message.content + "</p></div></div></li>";
         $("#chat").append(html);
         $("#message").val("");  //清空输入区
         var chat = $("#chat-view");
@@ -260,7 +260,7 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
     }
 
     /**
-     * 图灵机器人
+     * 机器人
      * @param message
      */
     function tuling(message){

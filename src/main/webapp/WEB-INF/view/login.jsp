@@ -86,10 +86,6 @@ minimum-scale=1.0, maximum-scale=2.0; charset=UTF-8">
       $('#submit').attr('value','请输入密码!!!').css('background','red');
       return false;
     }
-    //if(username != 'Amaya' || password != '123456'){
-    //	$('#submit').attr('value','账号或密码错误!!!').css('background','red');
-    //	return false;
-    //}
     else{
       $('#submit').attr('value','登录中~');
       return true;
